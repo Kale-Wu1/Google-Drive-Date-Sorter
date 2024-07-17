@@ -1,20 +1,39 @@
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import os
+import pickle
 
 # Replace with the path to your client secrets file downloaded from Google Cloud Platform
 CLIENT_SECRETS_FILE = "C:/Users/kalew/Downloads/client_secret_865603282077-bl69bb6comhvj5sj4o8t2ck86fs54t9d.apps.googleusercontent.com.json"
 
 # Define the desired scopes for your application
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 
 #Get drive service object
-def get_authenticated_service(): 
-  flow = InstalledAppFlow.from_client_secrets_file(
-      CLIENT_SECRETS_FILE, scopes=SCOPES)
-  credentials = flow.run_local_server(port=0)
-  return build('drive', 'v3', credentials=credentials)
+def get_authenticated_service():
+    """
+    Establishes user authorization and builds the Drive service object.
 
+    Returns:
+        A Google Drive service object if authorization is successful, None otherwise.
+    """
+    creds = None
+    token_path = 'token.pickle'
+    if os.path.exists(token_path):
+        with open(token_path, 'rb') as token:
+            creds = pickle.load(token)
+    
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+            creds = flow.run_local_server(port=0)
+        with open(token_path, 'wb') as token:
+            pickle.dump(creds, token)
+    
+    return build('drive', 'v3', credentials=creds)
 
 
 #Creates a new folder in the user's Drive.
@@ -96,14 +115,12 @@ def main():
   if service is not None:
 
     print(service.files().list(q=f"mimeType='application/vnd.google-apps.folder'", fields="files(name)").execute())
-
+    
 
     # Replace with IDs of your source and destination folders
-    source_folder_id = get_folder_id_by_name(service, "A")
-    print(source_folder_id)
+    source_folder_id = get_folder_id_by_name(service, "NewFolder")
     #destination_folder_id = 'your_destination_folder_id'
 
-'''
     files = get_file_list(service, source_folder_id)
     print(files)
     if files:
@@ -112,7 +129,7 @@ def main():
     else:
       print('No files found in the source folder.')
 
-    '''
+    
 
 
 if __name__ == '__main__':
