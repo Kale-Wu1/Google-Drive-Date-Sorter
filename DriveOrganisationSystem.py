@@ -113,16 +113,11 @@ def main():
   
 
   if service is not None:
-
-    print(service.files().list(q=f"mimeType='application/vnd.google-apps.folder'", fields="files(name)").execute())
-    
-
     # Replace with IDs of your source and destination folders
     source_folder_id = get_folder_id_by_name(service, "NewFolder")
     #destination_folder_id = 'your_destination_folder_id'
 
     files = get_file_list(service, source_folder_id)
-    print(files)
     if files:
         for file_info in files:
           print(file_info['id'] + " has a modification date of " + get_file_date(service, file_info['id']))
