@@ -5,7 +5,7 @@ import os
 import pickle
 
 # Replace with the path to your client secrets file downloaded from Google Cloud Platform
-CLIENT_SECRETS_FILE = "C:/Users/kalew/Downloads/client_secret_865603282077-bl69bb6comhvj5sj4o8t2ck86fs54t9d.apps.googleusercontent.com.json"
+CLIENT_SECRETS_FILE = "C:/Users/kalew/Downloads/client_secret_2_865603282077-bl69bb6comhvj5sj4o8t2ck86fs54t9d.apps.googleusercontent.com.json"
 
 # Define the desired scopes for your application
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -123,8 +123,6 @@ def main():
           print(file_info['id'] + " has a modification date of " + get_file_date(service, file_info['id']))
     else:
       print('No files found in the source folder.')
-
-    
 
 
 if __name__ == '__main__':
