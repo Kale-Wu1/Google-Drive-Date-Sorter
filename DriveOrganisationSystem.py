@@ -1,3 +1,8 @@
+"""
+AI tools were used in the making of the project. ChatGPT was used for syntax reference. (ie. "What does query = f"'{parent_folder_id}' in parents and mimeType='application/vnd.google-apps.folder'" mean?", How can [code] be improved?)
+
+"""
+
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
