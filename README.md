@@ -1,0 +1,2 @@
+Media sorter by date for google drive. When completed, should sort a folder of media into dated folders. 
+AI tools were used in the making of the project. ChatGPT was used for syntax reference. (ie. "What does query = f"'{parent_folder_id}' in parents and mimeType='application/vnd.google-apps.folder'" mean?" How can [code] be improved?)
